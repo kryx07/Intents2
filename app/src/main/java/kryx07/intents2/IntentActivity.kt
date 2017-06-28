@@ -1,12 +1,10 @@
 package kryx07.intents2
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.IBinder
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -39,9 +37,11 @@ class IntentActivity : AppCompatActivity() {
         startActivity(i)*/
     }
 
+
     override fun onStart() {
         super.onStart()
         registerReceiver()
+        //applicationContext.bindService(Intent(applicationContext,SampleService::class.java),mServiceConnection, Context.BIND_AUTO_CREATE)
     }
 
     @OnClick(R.id.call_button)
@@ -70,7 +70,8 @@ class IntentActivity : AppCompatActivity() {
     @OnClick(R.id.service_start_button)
     fun startCountDownService() {
         d("Clicked Start Service")
-        startService(Intent(applicationContext, SampleService::class.java))
+        applicationContext.startService(Intent(applicationContext, SampleService::class.java))
+        //applicationContext.startService(Intent(this@IntentActivity, HelloService2::class.java))
     }
 
 
@@ -108,7 +109,7 @@ class IntentActivity : AppCompatActivity() {
     fun registerReceiver() {
         val loadingReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                if (intent.action == getString(R.string.string)) {
+                if (intent.action == getString(R.string.broadcast_action)) {
                     val param = intent.getStringExtra(getString(R.string.string))
                     countdown.text = param
                 }
@@ -116,10 +117,21 @@ class IntentActivity : AppCompatActivity() {
         }
         LocalBroadcastManager
                 .getInstance(this)
-                .registerReceiver(loadingReceiver, IntentFilter(getString(R.string.string)));
+                .registerReceiver(loadingReceiver, IntentFilter(getString(R.string.broadcast_action)));
     }
 
     fun d(str: String) = Log.e(this.javaClass.simpleName, str)
+
+}
+
+object mServiceConnection : ServiceConnection {
+    override fun onServiceDisconnected(name: ComponentName?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 }
 

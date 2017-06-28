@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by sda on 28.06.17.
  */
-class CountDown(val millisInFuture: Long, countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {
+class CountDown(millisInFuture: Long, countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {
 
     private val logger = KotlinLogging.logger {  }
 

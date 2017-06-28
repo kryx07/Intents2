@@ -23,7 +23,10 @@
         </activity>
         <activity android:name=".SecondActivity" />
 
-        <service android:name=".SampleService" />
+        <service
+            android:name=".SampleService"
+            android:exported="false" />
+        <service android:name=".HelloService2" />
     </application>
 
 </manifest>
