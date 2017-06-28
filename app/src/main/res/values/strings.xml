@@ -10,6 +10,7 @@
     <string name="input_text_result_prompt">Any text</string>
     <string name="return_button_text">Return</string>
     <string name="start_countdown">Start Countdown</string>
+    <string name="start_countdown_bound">Start Countdown Bound</string>
     <string name="broadcast_action">broadcast_action</string>
     <string name="string">string</string>
 </resources>

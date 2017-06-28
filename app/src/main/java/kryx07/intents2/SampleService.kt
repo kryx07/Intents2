@@ -44,7 +44,7 @@ class SampleService : Service() {
 
     }
 
-    inner class CountDown(val millisInFuture: Long, countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {
+    inner class CountDown(millisInFuture: Long, countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {
 
         override fun onTick(millisUntilFinished: Long) {
             val ms = millisUntilFinished
@@ -58,7 +58,6 @@ class SampleService : Service() {
         override fun onFinish() {
             sendString("Game Over")
             onDestroy()
-
         }
     }
 

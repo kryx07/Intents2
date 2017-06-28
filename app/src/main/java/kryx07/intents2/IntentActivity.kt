@@ -1,6 +1,7 @@
 package kryx07.intents2
 
 import android.content.*
+import android.content.Context.*
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -20,28 +21,20 @@ class IntentActivity : AppCompatActivity() {
 
     private val logger = KotlinLogging.logger {}
 
+    private var myServiceBinder: SampleServiceBound.MyBinder? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
-        init()
-    }
-
-    fun init() {
-        /* call_button.setOnClickListener { call() }
-         camera_button.setOnClickListener { takeAPhoto() }*/
-        //call_button.setOnClickListener { call() }
-        /*val url = "http://www.google.com"
-        val i = Intent(Intent.ACTION_VIEW)
-        i.data = Uri.parse(url)
-        startActivity(i)*/
+        doBindService()
     }
 
 
     override fun onStart() {
         super.onStart()
         registerReceiver()
-        //applicationContext.bindService(Intent(applicationContext,SampleService::class.java),mServiceConnection, Context.BIND_AUTO_CREATE)
     }
 
     @OnClick(R.id.call_button)
@@ -71,9 +64,23 @@ class IntentActivity : AppCompatActivity() {
     fun startCountDownService() {
         d("Clicked Start Service")
         applicationContext.startService(Intent(applicationContext, SampleService::class.java))
-        //applicationContext.startService(Intent(this@IntentActivity, HelloService2::class.java))
+        //applicationContext.startService(Intent(this@IntentActivity, SampleServiceBound::class.java))
     }
 
+    @OnClick(R.id.service_start_button2)
+    fun refreshDataFromBoundService() {
+        d("Clicked Start Service")
+        //applicationContext.startService(Intent(this@IntentActivity, SampleServiceBound::class.java))
+        if (myService != null) {
+            d("myService is initialized")
+            d("time received: " + myService!!.showTime())
+            countdown2.text = myService!!.showTime()
+
+        } else {
+            d("myService is null")
+        }
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         when (requestCode) {
@@ -96,16 +103,6 @@ class IntentActivity : AppCompatActivity() {
 
     }
 
-    /*private val mBroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            if (intent.action == getString(R.string.string)) {
-                val param = intent.getStringExtra(getString(R.string.string))
-                countdown.text = param
-                // do something
-            }
-        }
-    }*/
-
     fun registerReceiver() {
         val loadingReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -122,16 +119,28 @@ class IntentActivity : AppCompatActivity() {
 
     fun d(str: String) = Log.e(this.javaClass.simpleName, str)
 
-}
+    private var myService: SampleServiceBound? = null
+    var mServiceConnection: ServiceConnection = object : ServiceConnection {
 
-object mServiceConnection : ServiceConnection {
-    override fun onServiceDisconnected(name: ComponentName?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+            Log.d("ServiceConnection", "connected")
+            myServiceBinder = binder as SampleServiceBound.MyBinder?
+            if (myServiceBinder != null) {
+                myService = (myServiceBinder as SampleServiceBound.MyBinder).getService()
+            }
+
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            Log.d("ServiceConnection", "disconnected")
+            myService = null
+
+        }
     }
 
-    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun doBindService() {
+        this.bindService(Intent(this, SampleServiceBound::class.java), mServiceConnection, Context.BIND_AUTO_CREATE)
     }
 
 }
-
