@@ -57,6 +57,8 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     //compile 'org.jetbrains.kotlin:kotlin-reflect'
 
+    compile 'io.github.microutils:kotlin-logging:1.4.5'
+
 }
 repositories {
     mavenCentral()

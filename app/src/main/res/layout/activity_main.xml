@@ -34,11 +34,40 @@
         android:layout_below="@id/call_button"
         android:text="@string/take_a_picture" />
 
+
+    <TextView
+        android:id="@+id/second_activity_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/camera_button"
+        android:text="@string/second_activity_says_nothing_yet" />
+
+    <Button
+        android:id="@+id/second_activity_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/second_activity_result"
+        android:text="@string/second_activity_button_text" />
+
+    <TextView
+        android:id="@+id/countdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/second_activity_button"
+        android:text="Empty" />
+
+    <Button
+        android:id="@+id/service_start_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/countdown"
+        android:text="@string/start_countdown" />
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/camera_button"
+        android:layout_below="@id/service_start_button"
         android:contentDescription="@string/picture_content_desc" />
 
 
