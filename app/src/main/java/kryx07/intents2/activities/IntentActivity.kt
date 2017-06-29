@@ -42,14 +42,36 @@ class IntentActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        EventBus.getDefault().unregister(this)
+        unRegisterEventBus()
         super.onDestroy()
+    }
+
+    override fun onResume() {
+        registerEventBus()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        unRegisterEventBus()
+        super.onPause()
     }
 
     override fun onStart() {
         super.onStart()
         registerReceiver()
-        EventBus.getDefault().register(this)
+        registerEventBus()
+    }
+
+    fun registerEventBus() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
+    }
+
+    fun unRegisterEventBus() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+        }
     }
 
     fun buildNotification() {
@@ -70,7 +92,7 @@ class IntentActivity : AppCompatActivity() {
         notificationBuilder.setContentIntent(resultPendingIntent)
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 // mId allows you to update the notification later on.
-        mNotificationManager.notify(1, notificationBuilder.build())
+        mNotificationManager.notify(123, notificationBuilder.build())
     }
 
     @OnClick(R.id.call_button)
@@ -190,6 +212,10 @@ class IntentActivity : AppCompatActivity() {
     fun doBindService() {
         this.bindService(Intent(this, SampleServiceBound::class.java), mServiceConnection, Context.BIND_AUTO_CREATE)
         buildNotification()
+    }
+
+    fun updateNotification(){
+        
     }
 
     private var serviceAlreadyRunning: Boolean = false

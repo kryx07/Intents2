@@ -1,22 +1,34 @@
 package kryx07.intents2.services
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.CountDownTimer
 import android.os.IBinder
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import kryx07.intents2.R
+import kryx07.intents2.activities.SecondActivity
 import kryx07.intents2.events.CountDownChangedTimeEvent
 import kryx07.intents2.events.ServiceAlreadyRunningEvent
 import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
-
-/**
- * Created by sda on 28.06.17.
- */
 class SampleService : Service() {
+
+    var alarmManager: AlarmManager? = null
+
+    fun setAlarm() {
+        val intent = Intent(this, SecondActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 123, intent, 0)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager!!.setExact(AlarmManager.RTC, 2000, pendingIntent)
+        }
+    }
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -27,6 +39,9 @@ class SampleService : Service() {
         d("I'm in the service - onCreate")
         EventBus.getDefault().post(ServiceAlreadyRunningEvent())
         d("Posted that service is already running")
+
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+        setAlarm()
 
 
     }
