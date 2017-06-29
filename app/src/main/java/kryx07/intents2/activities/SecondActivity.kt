@@ -1,4 +1,4 @@
-package kryx07.intents2
+package kryx07.intents2.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
 import kotlinx.android.synthetic.main.activity_second.*
+import kryx07.intents2.R
 
 
 class SecondActivity : AppCompatActivity() {

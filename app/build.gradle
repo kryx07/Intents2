@@ -59,6 +59,9 @@ dependencies {
 
     compile 'io.github.microutils:kotlin-logging:1.4.5'
 
+
+    compile 'org.greenrobot:eventbus:3.0.0'
+
 }
 repositories {
     mavenCentral()

@@ -1,6 +1,6 @@
 package kryx07.intents2.di
 
-import kryx07.intents2.IntentActivity
+import kryx07.intents2.activities.IntentActivity
 import javax.inject.Singleton
 
 /**

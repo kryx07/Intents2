@@ -14,19 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IntentActivity">
+        <activity android:name=".activities.IntentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SecondActivity" />
+        <activity android:name=".activities.SecondActivity" />
 
         <service
-            android:name=".SampleService"
+            android:name=".services.SampleService"
             android:exported="false" />
-        <service android:name=".SampleServiceBound" />
+        <service android:name=".services.SampleServiceBound" />
     </application>
 
 </manifest>

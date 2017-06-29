@@ -1,17 +1,16 @@
-package kryx07.intents2
+package kryx07.intents2.services
 
 import android.app.Service
-import android.widget.Toast
 import android.content.Intent
 import android.os.*
-import android.os.Process.THREAD_PRIORITY_BACKGROUND
 import android.util.Log
+import android.widget.Toast
 import java.util.concurrent.TimeUnit
 
 /**
  * Created by wd41 on 28.06.17.
  */
-class SampleServiceBound() : Service() {
+class SampleService2() : Service() {
 
     private var mServiceLooper: Looper? = null
     private var mServiceHandler: ServiceHandler? = null
@@ -29,7 +28,7 @@ class SampleServiceBound() : Service() {
     }
 
     fun updateTime(str: String) {
-        this@SampleServiceBound.time = str
+        this@SampleService2.time = str
     }
 
     // Handler that receives messages from the thread
@@ -103,8 +102,8 @@ class SampleServiceBound() : Service() {
                     TimeUnit.MILLISECONDS.toSeconds(ms) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(ms)))
             updateTime(text)
 
-            d("text in onTick" + text)
-            d("time in onTick" + time)
+            //  d("text in onTick" + text)
+            //d("time in onTick" + time)
         }
 
         override fun onFinish() {
@@ -116,7 +115,7 @@ class SampleServiceBound() : Service() {
 
 
     inner class MyBinder : Binder() {
-        fun getService(): SampleServiceBound = this@SampleServiceBound
+        fun getService(): SampleService2 = this@SampleService2
     }
 }
 

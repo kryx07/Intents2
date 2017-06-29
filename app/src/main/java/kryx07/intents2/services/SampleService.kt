@@ -1,4 +1,4 @@
-package kryx07.intents2
+package kryx07.intents2.services
 
 import android.app.Service
 import android.content.Intent
@@ -6,6 +6,10 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
+import kryx07.intents2.R
+import kryx07.intents2.events.CountDownChangedTimeEvent
+import kryx07.intents2.events.ServiceAlreadyRunningEvent
+import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
 
@@ -13,6 +17,7 @@ import java.util.concurrent.TimeUnit
  * Created by sda on 28.06.17.
  */
 class SampleService : Service() {
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -20,10 +25,14 @@ class SampleService : Service() {
     override fun onCreate() {
         super.onCreate()
         d("I'm in the service - onCreate")
+        EventBus.getDefault().post(ServiceAlreadyRunningEvent())
+        d("Posted that service is already running")
+
 
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        //EventBus.getDefault().register(this)
         d("On Start Command???")
         val countDownTimer = CountDown(10000, 100)
         countDownTimer.start()
@@ -39,8 +48,9 @@ class SampleService : Service() {
     }
 
     fun sendString(str: String) {
-        d(str)
+        //d(str)
         broadcastAction(str)
+        EventBus.getDefault().post(CountDownChangedTimeEvent(str))
 
     }
 
@@ -61,8 +71,9 @@ class SampleService : Service() {
         }
     }
 
-    override fun onDestroy() {
 
+    override fun onDestroy() {
+//        EventBus.getDefault().register(this)
         d("Destroyed")
         super.onDestroy()
 

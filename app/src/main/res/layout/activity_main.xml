@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kryx07.intents2.IntentActivity">
+    tools:context="kryx07.intents2.activities.IntentActivity">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/phone_number_input_layout"
@@ -76,6 +76,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/countdown2"
         android:text="@string/start_countdown_bound" />
+
+    <TextView
+        android:id="@+id/countdown3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/service_start_button2"
+        android:text="Empty" />
+
+    <Button
+        android:id="@+id/service_start_button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/countdown3"
+        android:text="Service Countdown - EventBus" />
 
     <ImageView
         android:id="@+id/image"
